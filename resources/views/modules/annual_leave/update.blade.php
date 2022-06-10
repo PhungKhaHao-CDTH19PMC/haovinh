@@ -1,71 +1,79 @@
 @extends('master')
 @section('main-content')
 <div class="admin-data-content layout-top-spacing">
-    <div class="widget-content widget-content-area">
-        <form method="POST" id="frm-cap-nhat" data-parsley-validate="" novalidate>
-            @csrf
-            <input type="hidden" id="id" name="id" value="{{$annual_leave->id}}">
-            <div class="row">
-                <div class="col-md-6 col-sm-12" style="margin-bottom:2%">
-                    <label class="form-label" for="ten">Ngày bắt đầu<span class="required"> *</span></label>
-                    <input type="date" class="form-control" id="start_date" name="start_date"
-                    value="{{$annual_leave->start_date}}"
-                    data-parsley-required-message="Vui lòng nhập ngày bắt đầu"
-                    required>
-                </div>
-                <div class="col-md-6 col-sm-12" style="margin-bottom:2%">
-                    <label class="form-label" for="ten">Ngày kết thúc<span class="required"> *</span></label>
-                    <input type="date" class="form-control" id="finish_date" name="finish_date"
-                    value="{{$annual_leave->finish_date}}"
-                    data-parsley-required-message="Vui lòng nhập ngày kết thúc"
-                    required>
-                    <div id="error-parley-select-fd" 
-                        style="color: #e7515a;
-                        font-size: 13px;
-                        font-weight: 700;
-                        letter-spacing: 1px;
-                        margin: 0.5rem 0 0 0 !important;
-                        list-style: none;"
-                    ></div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6 col-sm-12" style="margin-bottom:2%">
-                    <label class="form-label" for="ten">Tên nhân viên<span class="required"> *</span></label>
-                    <select class="form-select "
-                        data-parsley-required-message="Vui lòng chọn nhân viên"
-                        data-parsley-errors-container="#error-parley-select-nv"
-                        required
-                        id="user_id" name="user_id">
-                        <option value=""></option>
-                            @foreach($users as $user)
-                                @if($user->id==$annual_leave->user_id)
-                                    <option value="{{ $user->id}} " selected>{{ $user->fullname }}</option>
-                                @else
-                                    option value="{{ $user->id}} ">{{ $user->fullname}}</option>
-                                @endif
-                            @endforeach
-                    </select>
-                    <div id="error-parley-select-cv"></div>
-                </div>
-                <div class="col-md-6 col-sm-12" style="margin-bottom:2%">
-                    <label class="form-label" for="ten">Số ngày nghĩ<span class="required"> *</span></label>
-                    <input type="text" class="form-control" id="total_day" name="total_day" 
-                    value="{{$annual_leave->total_day}}"
-                    readonly>
-                </div>
-            </div>
-            <div class="d-lg-flex justify-content-end">
-                <div class="row mt-3" >
-                    <div class="col-md-6 mb-3">
-                        <button id="btn-submit-form" type="button" class="btn btn-primary px-5">Lưu</button>
+    <div class="row project-cards">
+        <div class="col-md-12 project-list">
+            <div class="card">
+                <div class="card-body">
+                    <div class="widget-content widget-content-area">
+                        <form method="POST" id="frm-cap-nhat" data-parsley-validate="" novalidate>
+                            @csrf
+                            <input type="hidden" id="id" name="id" value="{{$annual_leave->id}}">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12" style="margin-bottom:2%">
+                                    <label class="form-label" for="ten">Ngày bắt đầu<span class="required"> *</span></label>
+                                    <input type="date" class="form-control" id="start_date" name="start_date"
+                                    value="{{$annual_leave->start_date}}"
+                                    data-parsley-required-message="Vui lòng nhập ngày bắt đầu"
+                                    required>
+                                </div>
+                                <div class="col-md-6 col-sm-12" style="margin-bottom:2%">
+                                    <label class="form-label" for="ten">Ngày kết thúc<span class="required"> *</span></label>
+                                    <input type="date" class="form-control" id="finish_date" name="finish_date"
+                                    value="{{$annual_leave->finish_date}}"
+                                    data-parsley-required-message="Vui lòng nhập ngày kết thúc"
+                                    required>
+                                    <div id="error-parley-select-fd" 
+                                        style="color: #e7515a;
+                                        font-size: 13px;
+                                        font-weight: 700;
+                                        letter-spacing: 1px;
+                                        margin: 0.5rem 0 0 0 !important;
+                                        list-style: none;"
+                                    ></div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12" style="margin-bottom:2%">
+                                    <label class="form-label" for="ten">Tên nhân viên<span class="required"> *</span></label>
+                                    <select class="form-select "
+                                        data-parsley-required-message="Vui lòng chọn nhân viên"
+                                        data-parsley-errors-container="#error-parley-select-nv"
+                                        required
+                                        id="user_id" name="user_id">
+                                        <option value=""></option>
+                                            @foreach($users as $user)
+                                                @if($user->id==$annual_leave->user_id)
+                                                    <option value="{{ $user->id}} " selected>{{ $user->fullname }}</option>
+                                                @else
+                                                    option value="{{ $user->id}} ">{{ $user->fullname}}</option>
+                                                @endif
+                                            @endforeach
+                                    </select>
+                                    <div id="error-parley-select-cv"></div>
+                                </div>
+                                <div class="col-md-6 col-sm-12" style="margin-bottom:2%">
+                                    <label class="form-label" for="ten">Số ngày nghĩ<span class="required"> *</span></label>
+                                    <input type="text" class="form-control" id="total_day" name="total_day" 
+                                    value="{{$annual_leave->total_day}}"
+                                    readonly>
+                                </div>
+                            </div>
+                            <div class="d-lg-flex justify-content-end">
+                                <div class="row mt-3" >
+                                    <div class="col-md-6 mb-3">
+                                        <button id="btn-submit-form" type="button" class="btn btn-primary px-5">Lưu</button>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <a href="{{route('user.list')}}"class="btn btn-outline-primary px-5">Hủy</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                     </div>
-                    <div class="col-md-6">
-                        <a href="{{route('user.list')}}"class="btn btn-outline-primary px-5">Hủy</a>
-                    </div>
                 </div>
             </div>
-        </form>
+        </div>
     </div>
 </div>
 @include('modules.annual_leave.js')

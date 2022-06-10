@@ -1,121 +1,129 @@
 @extends('master')
 @section('main-content')
 <div class="admin-data-content layout-top-spacing">
-    <div class="widget-content widget-content-area">
-        <form method="POST" id="frm-cap-nhat" data-parsley-validate="" novalidate>
-            @csrf
-            <input type="hidden" id="id" name="id" value="{{$PaySalary->id}}">
-            <div class="row">
-                <div class="col-md-6 col-sm-12" style="margin-bottom:2%">
-                    <label class="form-label" for="ten">Họ tên nhân viên<span class="required"> *</span></label>
-                    <select class="form-select "
-                        data-parsley-required-message="Vui lòng chọn nhân viên"
-                        data-parsley-errors-container="#error-parley-select-nv"
-                        required
-                        id="user_id" name="user_id">
-                        @foreach($users as $user)
-                            @if($user->id == $PaySalary->user_id)
-                                <option value="{{ $user->id }}" selected>{{ $user->fullname }}</option>
-                            @else
-                                <option value="{{ $user->id }}" >{{ $user->fullname }}</option>
-                            @endif
-                        @endforeach
-                    </select>
-                    <div id="error-parley-select-nv"></div>
-                </div>
-                 <div class="col-md-6 col-sm-12" style="margin-bottom:1%">
-                    <label class="form-label" for="ten">Chức danh<span class="required"> *</span></label>
-                    <input type="text" class="form-control" id="salary_name" name="salary_name"
-                    value="{{$salary->name}}" readonly>
-                </div>
-                <div class="col-md-6 col-sm-12" style="margin-bottom:2%">
-                    <label class="form-label" for="ten">Ngày công<span class="required"> *</span></label>
-                    <input type="text" class="form-control" id="working_day" name="working_day"
-                    value="{{$PaySalary->working_day}}"
-                    data-parsley-max="31"
-                    data-parsley-max-message="Vui lòng nhập ngày công nhỏ hơn 31"
-                    data-parsley-required-message="Vui lòng nhập ngày ngày công"
-                    required >
-                </div>
-               
-                <div class="col-md-6 col-sm-12" style="margin-bottom:2%">
-                    <label class="form-label" for="ten">Lương cơ bản<span class="required"> *</span></label>
-                    <input type="text" class="form-control" id="salary_payable" name="salary_payable"
-                    value="{{$salary->salary_payable}}" readonly>
-                </div>
-                <div class="col-md-6 col-sm-12" style="margin-bottom:2%">
-                    <label class="form-label" for="ten">Lương<span class="required"> *</span></label>
-                    <input type="text" class="form-control" id="salary" name="salary"
-                    value="{{$PaySalary->salary}}" 
-                    data-parsley-maxlength="20"
-                    data-parsley-maxlength-message="Lương không thể nhập quá 20 ký tự"
-                    readonly>
-                </div>
-                <div class="col-md-6 col-sm-12" style="margin-bottom:2%">
-                    <label class="form-label" for="ten">Phụ cấp<span class="required"> *</span></label>
-                    <input type="text" class="form-control" id="allowance" name="allowance"
-                    value="{{$PaySalary->allowance}}"
-                    placeholder="Phụ cấp"
-                    data-parsley-required-message="Vui lòng nhập lương phụ cấp"
-                    data-parsley-maxlength="20"
-                    data-parsley-maxlength-message="Lương phụ cấp không thể nhập quá 20 ký tự"
-                    required>
-                </div>
+    <div class="row project-cards">
+        <div class="col-md-12 project-list">
+            <div class="card">
+                <div class="card-body">
+                    <div class="widget-content widget-content-area">
+                        <form method="POST" id="frm-cap-nhat" data-parsley-validate="" novalidate>
+                            @csrf
+                            <input type="hidden" id="id" name="id" value="{{$PaySalary->id}}">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12" style="margin-bottom:2%">
+                                    <label class="form-label" for="ten">Họ tên nhân viên<span class="required"> *</span></label>
+                                    <select class="form-select "
+                                        data-parsley-required-message="Vui lòng chọn nhân viên"
+                                        data-parsley-errors-container="#error-parley-select-nv"
+                                        required
+                                        id="user_id" name="user_id">
+                                        @foreach($users as $user)
+                                            @if($user->id == $PaySalary->user_id)
+                                                <option value="{{ $user->id }}" selected>{{ $user->fullname }}</option>
+                                            @else
+                                                <option value="{{ $user->id }}" >{{ $user->fullname }}</option>
+                                            @endif
+                                        @endforeach
+                                    </select>
+                                    <div id="error-parley-select-nv"></div>
+                                </div>
+                                <div class="col-md-6 col-sm-12" style="margin-bottom:1%">
+                                    <label class="form-label" for="ten">Chức danh<span class="required"> *</span></label>
+                                    <input type="text" class="form-control" id="salary_name" name="salary_name"
+                                    value="{{$salary->name}}" readonly>
+                                </div>
+                                <div class="col-md-6 col-sm-12" style="margin-bottom:2%">
+                                    <label class="form-label" for="ten">Ngày công<span class="required"> *</span></label>
+                                    <input type="text" class="form-control" id="working_day" name="working_day"
+                                    value="{{$PaySalary->working_day}}"
+                                    data-parsley-max="31"
+                                    data-parsley-max-message="Vui lòng nhập ngày công nhỏ hơn 31"
+                                    data-parsley-required-message="Vui lòng nhập ngày ngày công"
+                                    required >
+                                </div>
+                            
+                                <div class="col-md-6 col-sm-12" style="margin-bottom:2%">
+                                    <label class="form-label" for="ten">Lương cơ bản<span class="required"> *</span></label>
+                                    <input type="text" class="form-control" id="salary_payable" name="salary_payable"
+                                    value="{{$salary->salary_payable}}" readonly>
+                                </div>
+                                <div class="col-md-6 col-sm-12" style="margin-bottom:2%">
+                                    <label class="form-label" for="ten">Lương<span class="required"> *</span></label>
+                                    <input type="text" class="form-control" id="salary" name="salary"
+                                    value="{{$PaySalary->salary}}" 
+                                    data-parsley-maxlength="20"
+                                    data-parsley-maxlength-message="Lương không thể nhập quá 20 ký tự"
+                                    readonly>
+                                </div>
+                                <div class="col-md-6 col-sm-12" style="margin-bottom:2%">
+                                    <label class="form-label" for="ten">Phụ cấp<span class="required"> *</span></label>
+                                    <input type="text" class="form-control" id="allowance" name="allowance"
+                                    value="{{$PaySalary->allowance}}"
+                                    placeholder="Phụ cấp"
+                                    data-parsley-required-message="Vui lòng nhập lương phụ cấp"
+                                    data-parsley-maxlength="20"
+                                    data-parsley-maxlength-message="Lương phụ cấp không thể nhập quá 20 ký tự"
+                                    required>
+                                </div>
 
-                <div class="col-md-6 col-sm-12" style="margin-bottom:1%">
-                    <label class="form-label" for="ten">Tổng cộng<span class="required"> *</span></label>
-                    <input type="text" class="form-control" id="total" 
-                    data-parsley-maxlength="20"
-                    data-parsley-maxlength-message="Lương tổng cộng không thể nhập quá 20 ký tự"
-                    name="total" readonly>
-                </div>
-                <div class="col-md-6 col-sm-12" style="margin-bottom:2%">
-                    <label class="form-label" for="ten">Tạm ứng<span class="required"> *</span></label>
-                    <input type="text" class="form-control" id="advance" name="advance"
-                    value="{{$PaySalary->advance}}"
-                    placeholder="Lương tạm ứng"
-                    data-parsley-required-message="Vui lòng nhập lương tạm ứng"
-                    data-parsley-maxlength="20"
-                    data-parsley-maxlength-message="Lương tạm ứng không thể nhập quá 20 ký tự"
-                    required>
-                </div>
-                <div class="col-md-6 col-sm-12" style="margin-bottom:2%">
-                    <label class="form-label" for="ten">Lương nhận thực<span class="required"> *</span></label>
-                    <input type="text" class="form-control" id="actual_salary" name="actual_salary"
-                    value="{{$PaySalary->actual_salary}}" 
-                    data-parsley-maxlength="20"
-                    data-parsley-maxlength-message="Lương nhận thực không thể nhập quá 20 ký tự"
-                    readonly>
-                </div>
-                <div class="col-md-6 col-sm-12" style="margin-bottom:2%">
-                    <label class="form-label" for="ten">Trạng thái<span class="required"> *</span></label>
-                    <select class="form-control "
-                        data-parsley-required-message="Vui lòng chọn trạng thái"
-                        data-parsley-errors-container="#error-parley-select-tt"
-                        required
-                        id="status" name="status">
-                            @if($PaySalary->status == 'Chưa xác nhận')
-                                <option value = 1 >Đã xác nhận</option>
-                                <option value = 0 selected>Chưa xác nhận</option>
-                            @else
-                                <option value = 1 selected>Đã xác nhận</option>
-                                <option value = 0 >Chưa xác nhận</option> 
-                            @endif
-                    </select>
-                    <div id="error-parley-select-tt"></div>
+                                <div class="col-md-6 col-sm-12" style="margin-bottom:1%">
+                                    <label class="form-label" for="ten">Tổng cộng<span class="required"> *</span></label>
+                                    <input type="text" class="form-control" id="total" 
+                                    data-parsley-maxlength="20"
+                                    data-parsley-maxlength-message="Lương tổng cộng không thể nhập quá 20 ký tự"
+                                    name="total" readonly>
+                                </div>
+                                <div class="col-md-6 col-sm-12" style="margin-bottom:2%">
+                                    <label class="form-label" for="ten">Tạm ứng<span class="required"> *</span></label>
+                                    <input type="text" class="form-control" id="advance" name="advance"
+                                    value="{{$PaySalary->advance}}"
+                                    placeholder="Lương tạm ứng"
+                                    data-parsley-required-message="Vui lòng nhập lương tạm ứng"
+                                    data-parsley-maxlength="20"
+                                    data-parsley-maxlength-message="Lương tạm ứng không thể nhập quá 20 ký tự"
+                                    required>
+                                </div>
+                                <div class="col-md-6 col-sm-12" style="margin-bottom:2%">
+                                    <label class="form-label" for="ten">Lương nhận thực<span class="required"> *</span></label>
+                                    <input type="text" class="form-control" id="actual_salary" name="actual_salary"
+                                    value="{{$PaySalary->actual_salary}}" 
+                                    data-parsley-maxlength="20"
+                                    data-parsley-maxlength-message="Lương nhận thực không thể nhập quá 20 ký tự"
+                                    readonly>
+                                </div>
+                                <div class="col-md-6 col-sm-12" style="margin-bottom:2%">
+                                    <label class="form-label" for="ten">Trạng thái<span class="required"> *</span></label>
+                                    <select class="form-control "
+                                        data-parsley-required-message="Vui lòng chọn trạng thái"
+                                        data-parsley-errors-container="#error-parley-select-tt"
+                                        required
+                                        id="status" name="status">
+                                            @if($PaySalary->status == 'Chưa xác nhận')
+                                                <option value = 1 >Đã xác nhận</option>
+                                                <option value = 0 selected>Chưa xác nhận</option>
+                                            @else
+                                                <option value = 1 selected>Đã xác nhận</option>
+                                                <option value = 0 >Chưa xác nhận</option> 
+                                            @endif
+                                    </select>
+                                    <div id="error-parley-select-tt"></div>
+                                </div>
+                            </div>
+                            <div class="d-lg-flex justify-content-end">
+                                <div class="row mt-3" >
+                                    <div class="col-md-6 mb-3">
+                                        <button id="btn-submit-form" type="button" class="btn btn-primary px-5">Lưu</button>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <a href="{{route('pay_salaries.list')}}"class="btn btn-outline-primary px-5">Hủy</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
-            <div class="d-lg-flex justify-content-end">
-                <div class="row mt-3" >
-                    <div class="col-md-6 mb-3">
-                        <button id="btn-submit-form" type="button" class="btn btn-primary px-5">Lưu</button>
-                    </div>
-                    <div class="col-md-6">
-                        <a href="{{route('pay_salaries.list')}}"class="btn btn-outline-primary px-5">Hủy</a>
-                    </div>
-                </div>
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 @include('modules.pay_salaries.js')

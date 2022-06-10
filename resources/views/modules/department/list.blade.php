@@ -3,55 +3,63 @@
 @include('modules.department.create-modal')
 @include('modules.department.update-modal')
 <div class="admin-data-content layout-top-spacing">
-    <div class="row">
-        <div class="col-12 mb-4">
-            <div class="row">
-                <div class="col-3">
-                    <select  multiple="multiple" class="form-control  basic" id="department_name" name="department_name">
-                        @foreach($departments as $department)   
-                            <option value="{{$department->name}}">{{$department->name}}</option>
-                        @endforeach
-                    </select>
-                </div>
-                
-                <div class="col-9">
-                    <div class="d-lg-flex justify-content-end">
-                        <button type="button" id="btn-them-moi" class="btn btn-primary mt-2 mt-lg-1">
-                            <i class="bx bxs-plus-square"></i>Thêm mới
-                        </button>
+    <div class="row project-cards">
+        <div class="col-md-12 project-list">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12 mb-4">
+                            <div class="row">
+                                <div class="col-3">
+                                    <select  multiple="multiple" class="form-control  basic" id="department_name" name="department_name">
+                                        @foreach($departments as $department)   
+                                            <option value="{{$department->name}}">{{$department->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                
+                                <div class="col-9">
+                                    <div class="d-lg-flex justify-content-end">
+                                        <button type="button" id="btn-them-moi" class="btn btn-primary mt-2 mt-lg-1">
+                                            <i class="bx bxs-plus-square"></i>Thêm mới
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 mb-4">
+                            <div class="row">
+                                <div class="col-3">
+                                    <select id="select-chon-hang-loat" class="form-control">
+                                        <option value=""></option>
+                                        <option value="delete"> Xoá</option>
+                                    </select>
+                                </div>
+                                <div class="col-3">
+                                    <button id="btn-ap-dung" class="btn btn-outline-primary form-control " type="button" disabled>Áp dụng</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="statbox widget box box-shadow">
+                                <div class="widget-content widget-content-area">
+                                    <table id="department" class="table style-2  table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th><input name="select_all" value="1" type="checkbox"></th>
+                                                <th ></th>
+                                                <th>Tên phòng ban</th>
+                                                <th>Chức năng</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div> 
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-12 mb-4">
-            <div class="row">
-                <div class="col-3">
-                    <select id="select-chon-hang-loat" class="form-control">
-                        <option value=""></option>
-                        <option value="delete"> Xoá</option>
-                    </select>
-                </div>
-                <div class="col-3">
-                    <button id="btn-ap-dung" class="btn btn-outline-primary form-control " type="button" disabled>Áp dụng</button>
-                </div>
-            </div>
-        </div>
-        <div class="col-12 layout-spacing">
-            <div class="statbox widget box box-shadow">
-                <div class="widget-content widget-content-area">
-                    <table id="department" class="table style-2  table-hover">
-                        <thead>
-                            <tr>
-                                <th><input name="select_all" value="1" type="checkbox"></th>
-                                <th ></th>
-                                <th>Tên phòng ban</th>
-                                <th>Chức năng</th>
-                            </tr>
-                        </thead>
-                    </table>
-                </div>
-            </div>
-        </div> 
     </div>
 </div>
 @include('modules.department.js')

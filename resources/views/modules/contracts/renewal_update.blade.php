@@ -1,51 +1,59 @@
 @extends('master')
 @section('main-content')
 <div class="admin-data-content layout-top-spacing">
-    <div class="widget-content widget-content-area">
-        <form method="POST" id="frm-them-moi" data-parsley-validate="" novalidate>
-            @csrf
-            <div class="row">
-                <input type="hidden" id="id" name="id" value="{{$contractExtension->id}}"/>
-                <input type="hidden" id="contract_id" name="contract_id" value="{{$contractExtension->contract_id}}"/>
-                <div class="col-md-6 col-sm-12" style="margin-bottom:2%">
-                    <label class="form-label" for="ten">Mã hợp đồng<span class="required"> *</span></label>
-                    <input type="text" class="form-control" id="code" name="code" readonly value="{{$contractExtension->contract->code}}">
-                </div>
-                <div class="col-md-6 col-sm-12" style="margin-bottom:2%">
-                    <label class="form-label" for="ten">Gia hạn từ<span class="required"> *</span></label>
-                    <input type="date" class="form-control" id="renewal_date_start" name="renewal_date_start"
-                    data-parsley-required-message="Vui lòng nhập ngày bắt đầu"
-                    value="{{$contractExtension->renewal_date_start}}"
-                    required>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6 col-sm-12" style="margin-bottom:2%">
-                    <label class="form-label" for="ten">Gia hạn đến<span class="required"> *</span></label>
-                    <input type="date" class="form-control" id="renewal_date_finish" name="renewal_date_finish"
-                    data-parsley-required-message="Vui lòng nhập ngày kết thúc"
-                    value="{{$contractExtension->renewal_date_finish}}"
-                    required>
-                </div>
-                <div class="col-md-6 col-sm-12" style="margin-bottom:2%">
-                    <label class="form-label" for="ten">Hệ số lương<span class="required"> *</span></label>
-                    <input type="text" class="form-control" id="salary_factor" name="salary_factor"
-                    data-parsley-required-message="Vui lòng nhập hệ số lương"
-                    value="{{$contractExtension->salary_factor}}"
-                    required>
-                </div>
-            </div>
-            <div class="d-lg-flex justify-content-end">
-                <div class="row mt-3" >
-                    <div class="col-md-6 mb-3">
-                        <button id="btn-submit-form" type="button" class="btn btn-primary px-5">Lưu</button>
+    <div class="row project-cards">
+        <div class="col-md-12 project-list">
+            <div class="card">
+                <div class="card-body">
+                    <div class="widget-content widget-content-area">
+                        <form method="POST" id="frm-them-moi" data-parsley-validate="" novalidate>
+                            @csrf
+                            <div class="row">
+                                <input type="hidden" id="id" name="id" value="{{$contractExtension->id}}"/>
+                                <input type="hidden" id="contract_id" name="contract_id" value="{{$contractExtension->contract_id}}"/>
+                                <div class="col-md-6 col-sm-12" style="margin-bottom:2%">
+                                    <label class="form-label" for="ten">Mã hợp đồng<span class="required"> *</span></label>
+                                    <input type="text" class="form-control" id="code" name="code" readonly value="{{$contractExtension->contract->code}}">
+                                </div>
+                                <div class="col-md-6 col-sm-12" style="margin-bottom:2%">
+                                    <label class="form-label" for="ten">Gia hạn từ<span class="required"> *</span></label>
+                                    <input type="date" class="form-control" id="renewal_date_start" name="renewal_date_start"
+                                    data-parsley-required-message="Vui lòng nhập ngày bắt đầu"
+                                    value="{{$contractExtension->renewal_date_start}}"
+                                    required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12" style="margin-bottom:2%">
+                                    <label class="form-label" for="ten">Gia hạn đến<span class="required"> *</span></label>
+                                    <input type="date" class="form-control" id="renewal_date_finish" name="renewal_date_finish"
+                                    data-parsley-required-message="Vui lòng nhập ngày kết thúc"
+                                    value="{{$contractExtension->renewal_date_finish}}"
+                                    required>
+                                </div>
+                                <div class="col-md-6 col-sm-12" style="margin-bottom:2%">
+                                    <label class="form-label" for="ten">Hệ số lương<span class="required"> *</span></label>
+                                    <input type="text" class="form-control" id="salary_factor" name="salary_factor"
+                                    data-parsley-required-message="Vui lòng nhập hệ số lương"
+                                    value="{{$contractExtension->salary_factor}}"
+                                    required>
+                                </div>
+                            </div>
+                            <div class="d-lg-flex justify-content-end">
+                                <div class="row mt-3" >
+                                    <div class="col-md-6 mb-3">
+                                        <button id="btn-submit-form" type="button" class="btn btn-primary px-5">Lưu</button>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <a href="{{route('contracts.renewal',['id'=> $contractExtension->contract_id])}}"class="btn btn-outline-primary px-5">Hủy</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                     </div>
-                    <div class="col-md-6">
-                        <a href="{{route('contracts.renewal',['id'=> $contractExtension->contract_id])}}"class="btn btn-outline-primary px-5">Hủy</a>
-                    </div>
                 </div>
             </div>
-        </form>
+        </div>
     </div>
 </div>
 @include('modules.contracts.js')
