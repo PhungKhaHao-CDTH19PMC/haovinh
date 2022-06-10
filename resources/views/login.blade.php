@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
-    <title>CORK Admin Template - Login Cover Page</title>
+    <title>HÀO VINH Admin Template - Login Cover Page</title>
     <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico"/>
     <link href="assets/css/loader.css" rel="stylesheet" type="text/css" />
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
@@ -27,7 +27,7 @@
                 <div class="form-container">
                     <div class="form-content">
 
-                        <h1 class="">Log In to <a href="index.html"><span class="brand-name">CORK</span></a></h1>
+                        <h1 class="">Log In to <a href="index.html"><span class="brand-name">HÀO VINH</span></a></h1>
                         <p class="signup-link">New Here? <a href="auth_register.html">Create an account</a></p>
                         <form class="text-left"  data-parsley-validate="" action="{{ route('do_login') }}" method="POST" id = "frm-dang-nhap" data-parsley-validate="" novalidate>
                             @csrf
@@ -74,7 +74,7 @@
                                 </div>
                             </div>
                         </form>                        
-                        <p class="terms-conditions">© 2020 All Rights Reserved. <a href="index.html">CORK</a> is a product of Designreset. <a href="javascript:void(0);">Cookie Preferences</a>, <a href="javascript:void(0);">Privacy</a>, and <a href="javascript:void(0);">Terms</a>.</p>
+                        <p class="terms-conditions">© 2020 All Rights Reserved. <a href="index.html">HÀO VINH</a> is a product of Designreset. <a href="javascript:void(0);">Cookie Preferences</a>, <a href="javascript:void(0);">Privacy</a>, and <a href="javascript:void(0);">Terms</a>.</p>
 
                     </div>                    
                 </div>

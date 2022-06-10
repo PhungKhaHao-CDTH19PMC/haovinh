@@ -1,6 +1,9 @@
 @extends('master')
 @section('main-content')
 @csrf
+<a href="{{route('annual_leave.list')}}">
+            <span class="admin-logo">DANH SÁCH ĐƠN NGHỈ PHÉP<span></span></span>
+</a>
 <div class="admin-data-content layout-top-spacing">
     <div class="row project-cards">
         <div class="col-md-12 project-list">
