@@ -18,7 +18,7 @@ class AnnualLeaveController extends Controller
             'page'      => ''
         ];
         $this->title = 'Nghĩ phép';
-    }
+    }    
     /**
      * Display a listing of the resource.
      *
@@ -28,7 +28,7 @@ class AnnualLeaveController extends Controller
     public function index()
     {
         $user = User::all();
-        $annual_leaves  = AnnualLeave::all();
+        $annual_leaves  = AnnualLeave::where('status',1)->get();
         $this->breadcrumb['page'] = 'Danh sách';
         $data = [
             'users'      => $user,
@@ -36,6 +36,18 @@ class AnnualLeaveController extends Controller
         ];
 
         return $this->openView("modules.{$this->module}.list", $data);
+    }
+    public function waitingListForApproval()
+    {
+        $user = User::all();
+        $annual_leaves  = AnnualLeave::where('status',0)->get();
+        $this->breadcrumb['page'] = 'Danh sách chờ duyệt';
+        $data = [
+            'users'      => $user,
+            'annual_leave' => $annual_leaves
+        ];
+
+        return $this->openView("modules.{$this->module}.waiting", $data);
     }
 
     /**
@@ -87,6 +99,7 @@ class AnnualLeaveController extends Controller
                 'finish_date'   => $request->finish_date,
                 'user_id'       => $request->user_id,
                 'total_day'     => Carbon::parse($request->finish_date)->diffInDays(Carbon::parse($request->start_date)) + 1,
+                'status'        => 0
             ]
         );
         $route = "{$this->module}.list";
@@ -227,9 +240,9 @@ class AnnualLeaveController extends Controller
         $filter['search'] =  $searchValue;
         $filter = $this->customFilterAjax($filter, $columnName_arr);
         // Total records
-        $totalRecords  = AnnualLeave::count();
-        $totalRecordswithFilter = AnnualLeave::queryData($filter)->distinct()->count();
-        $annual_leave = AnnualLeave::select(['annual_leaves.*'])
+        $totalRecords  = AnnualLeave::where('status',1)->count();
+        $totalRecordswithFilter = AnnualLeave::where('status',1)->queryData($filter)->distinct()->count();
+        $annual_leave = AnnualLeave::where('status',1)->select(['annual_leaves.*'])
             ->leftjoin('users', 'users.id', '=', 'annual_leaves.user_id')
             ->with(['user'])
             ->queryData($filter)
@@ -244,5 +257,49 @@ class AnnualLeaveController extends Controller
         ];
         echo json_encode($response);
         exit;
+    }
+
+    public function loadAjaxWaitingListForApproval(Request $request)
+    {
+        $draw            = $request->get('draw');
+        $start           = $request->get("start");
+        $rowperpage      = $request->get("length"); // Rows display per page
+        $columnIndex_arr = $request->get('order');
+        $columnName_arr  = $request->get('columns');
+        $order_arr       = $request->get('order');
+        $search_arr      = $request->get('search');
+        $columnIndex     = $columnIndex_arr[0]['column']; // Column index
+        $columnName      = $columnName_arr[$columnIndex]['name']; // Column name
+        $columnSortOrder = $order_arr[0]['dir']; // asc or desc
+        $searchValue     = trim($search_arr['value']); // Search value
+        $filter['search'] =  $searchValue;
+        $filter = $this->customFilterAjax($filter, $columnName_arr);
+        // Total records
+        $totalRecords  = AnnualLeave::where('status',0)->count();
+        $totalRecordswithFilter = AnnualLeave::where('status',0)->queryData($filter)->distinct()->count();
+        $annual_leave = AnnualLeave::where('status',0)->select(['annual_leaves.*'])
+            ->leftjoin('users', 'users.id', '=', 'annual_leaves.user_id')
+            ->with(['user'])
+            ->queryData($filter)
+            ->orderBy($columnName, $columnSortOrder)->distinct()->skip($start)->take($rowperpage)->get();
+
+        $response = [
+            "draw"                 => intval($draw),
+            "iTotalRecords"        => $totalRecords,
+            "iTotalDisplayRecords" => $totalRecordswithFilter,
+            "aaData"               => $annual_leave,
+            "filter"               => $filter,
+        ];
+        echo json_encode($response);
+        exit;
+    }
+    public function approveLeaveApplication($id)
+    {
+        $annual_leave = AnnualLeave::find($id);
+        if (!empty($annual_leave)) {
+            $annual_leave->status = 1;
+            $annual_leave->save();
+        }
+        return back();
     }
 }

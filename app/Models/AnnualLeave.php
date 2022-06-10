@@ -15,6 +15,7 @@ class AnnualLeave extends Model
         'finish_date',
         'user_id',
         'total_day',
+        'status'
     ];
 
     public function user()
