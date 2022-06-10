@@ -1,87 +1,95 @@
 @extends('master')
 @section('main-content')
 <div class="admin-data-content layout-top-spacing">
-    <div class="widget-content widget-content-area">
-        <form method="POST" id="frm-them-moi" data-parsley-validate="" novalidate>
-            @csrf
-            <div class="row">
-                <div class="col-md-6 col-sm-12" style="margin-bottom:2%">
-                    <label class="form-label" for="ten">Mã hợp đồng<span class="required"> *</span></label>
-                    <input type="text" class="form-control" id="code" name="code" value="{{$code}}" readonly>
-                </div>
-                <div class="col-md-6 col-sm-12" style="margin-bottom:2%">
-                    <label class="form-label" for="ten">Tên nhân viên<span class="required"> *</span></label>
-                    <select class="form-select "
-                        data-parsley-required-message="Vui lòng chọn nhân viên"
-                        data-parsley-errors-container="#error-parley-select-nv"
-                        required
-                        id="user_id" name="user_id">
-                        <option value=""></option>
-                        @foreach($users as $user)
-                        <option value="{{ $user->id }}">{{ $user->fullname }}</option>
-                        @endforeach
-                    </select>
-                    <div id="error-parley-select-nv"></div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6 col-sm-12" style="margin-bottom:2%">
-                    <label class="form-label" for="ten">Ngày kí hợp đồng<span class="required"> *</span></label>
-                    <input type="date" class="form-control" id="signing_date" name="signing_date"
-                    data-parsley-required-message="Vui lòng nhập ngày kí hợp đồng"
-                    required>
-                </div>
-                <div class="col-md-6 col-sm-12" style="margin-bottom:2%">
-                    <label class="form-label" for="ten">Ngày bắt đầu<span class="required"> *</span></label>
-                    <input type="date" class="form-control" id="start_date" name="start_date"
-                    data-parsley-required-message="Vui lòng nhập ngày bắt đầu"
-                    required>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6 col-sm-12" style="margin-bottom:2%">
-                    <label class="form-label" for="ten">Ngày kết thúc<span class="required"> *</span></label>
-                    <input type="date" class="form-control" id="finish_date" name="finish_date"
-                    data-parsley-required-message="Vui lòng nhập ngày kết thúc"
-                    required>
-                </div>
-                <div class="col-md-6 col-sm-12" style="margin-bottom:1%">
-                    <label class="form-label" for="ten">Nội dung<span class="required"> *</span></label>
-                    <input type="text" class="form-control" name="content"
-                    placeholder="Nội dung"
-                    data-parsley-required-message="Vui lòng nhập nội dung"
-                    data-parsley-maxlength="191"
-                    data-parsley-maxlength-message="Họ tên người dùng không thể nhập quá 191 ký tự"
-                    required>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6 col-sm-12" style="margin-bottom:2%">
-                    <label class="form-label" for="ten">Loại lương<span class="required"> *</span></label>
-                    <select class="form-select "
-                        data-parsley-required-message="Vui lòng chọn loại lương"
-                        data-parsley-errors-container="#error-parley-select-ll"
-                        required
-                        id="salary_id" name="salary_id">
-                        <option value=""></option>
-                        @foreach($salary as $sa)
-                        <option value="{{ $sa->id }}">{{ $sa->name }}</option>
-                        @endforeach
-                    </select>
-                    <div id="error-parley-select-ll"></div>
-                </div>
-            </div>
-            <div class="d-lg-flex justify-content-end">
-                <div class="row mt-3" >
-                    <div class="col-md-6 mb-3">
-                        <button id="btn-submit-form" type="button" class="btn btn-primary px-5">Lưu</button>
+    <div class="row project-cards">
+        <div class="col-md-12 project-list">
+            <div class="card">
+                <div class="card-body">
+                    <div class="widget-content widget-content-area">
+                        <form method="POST" id="frm-them-moi" data-parsley-validate="" novalidate>
+                            @csrf
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12" style="margin-bottom:2%">
+                                    <label class="form-label" for="ten">Mã hợp đồng<span class="required"> *</span></label>
+                                    <input type="text" class="form-control" id="code" name="code" value="{{$code}}" readonly>
+                                </div>
+                                <div class="col-md-6 col-sm-12" style="margin-bottom:2%">
+                                    <label class="form-label" for="ten">Tên nhân viên<span class="required"> *</span></label>
+                                    <select class="form-select "
+                                        data-parsley-required-message="Vui lòng chọn nhân viên"
+                                        data-parsley-errors-container="#error-parley-select-nv"
+                                        required
+                                        id="user_id" name="user_id">
+                                        <option value=""></option>
+                                        @foreach($users as $user)
+                                        <option value="{{ $user->id }}">{{ $user->fullname }}</option>
+                                        @endforeach
+                                    </select>
+                                    <div id="error-parley-select-nv"></div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12" style="margin-bottom:2%">
+                                    <label class="form-label" for="ten">Ngày kí hợp đồng<span class="required"> *</span></label>
+                                    <input type="date" class="form-control" id="signing_date" name="signing_date"
+                                    data-parsley-required-message="Vui lòng nhập ngày kí hợp đồng"
+                                    required>
+                                </div>
+                                <div class="col-md-6 col-sm-12" style="margin-bottom:2%">
+                                    <label class="form-label" for="ten">Ngày bắt đầu<span class="required"> *</span></label>
+                                    <input type="date" class="form-control" id="start_date" name="start_date"
+                                    data-parsley-required-message="Vui lòng nhập ngày bắt đầu"
+                                    required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12" style="margin-bottom:2%">
+                                    <label class="form-label" for="ten">Ngày kết thúc<span class="required"> *</span></label>
+                                    <input type="date" class="form-control" id="finish_date" name="finish_date"
+                                    data-parsley-required-message="Vui lòng nhập ngày kết thúc"
+                                    required>
+                                </div>
+                                <div class="col-md-6 col-sm-12" style="margin-bottom:1%">
+                                    <label class="form-label" for="ten">Nội dung<span class="required"> *</span></label>
+                                    <input type="text" class="form-control" name="content"
+                                    placeholder="Nội dung"
+                                    data-parsley-required-message="Vui lòng nhập nội dung"
+                                    data-parsley-maxlength="191"
+                                    data-parsley-maxlength-message="Họ tên người dùng không thể nhập quá 191 ký tự"
+                                    required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12" style="margin-bottom:2%">
+                                    <label class="form-label" for="ten">Loại lương<span class="required"> *</span></label>
+                                    <select class="form-select "
+                                        data-parsley-required-message="Vui lòng chọn loại lương"
+                                        data-parsley-errors-container="#error-parley-select-ll"
+                                        required
+                                        id="salary_id" name="salary_id">
+                                        <option value=""></option>
+                                        @foreach($salary as $sa)
+                                        <option value="{{ $sa->id }}">{{ $sa->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <div id="error-parley-select-ll"></div>
+                                </div>
+                            </div>
+                            <div class="d-lg-flex justify-content-end">
+                                <div class="row mt-3" >
+                                    <div class="col-md-6 mb-3">
+                                        <button id="btn-submit-form" type="button" class="btn btn-primary px-5">Lưu</button>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <a href="{{route('contracts.list')}}"class="btn btn-outline-primary px-5">Hủy</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                     </div>
-                    <div class="col-md-6">
-                        <a href="{{route('contracts.list')}}"class="btn btn-outline-primary px-5">Hủy</a>
-                    </div>
                 </div>
             </div>
-        </form>
+        </div>
     </div>
 </div>
 @include('modules.contracts.js')

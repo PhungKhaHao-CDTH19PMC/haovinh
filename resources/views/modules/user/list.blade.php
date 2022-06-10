@@ -2,72 +2,80 @@
 @section('main-content')
 @csrf
 <div class="admin-data-content layout-top-spacing">
-    <div class="row">
-        <div class="col-12 mb-4">
-            <div class="row">
-                <div class="col-3">
-                    <select multiple="multiple" class="form-control" id="fullname" name="fullname" >
-                        @foreach($user_fullname as $fullname)
-                        <option value="{{ $fullname }}">{{ $fullname }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="col-3">
-                    <select multiple="multiple" class="form-control" id="phone" name="phone" >
-                        @foreach($user_phone as $phone)
-                        <option value="{{ $phone }}">{{ $phone }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="col-3">
-                    <select multiple="multiple" class="form-control" id="role_id" name="role_id" >
-                        @foreach($role as $role)
-                        <option value="{{ $role->id }}">{{ $role->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="col-3">
-                    <div class="d-lg-flex justify-content-end">
-                        <a href="{{ route('user.create') }}" id="btn-them-moi" class="btn btn-primary mt-2 mt-lg-1">
-                            <i class="bx bxs-plus-square"></i>Thêm mới
-                        </a>
+    <div class="row project-cards">
+        <div class="col-md-12 project-list">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12 mb-4">
+                            <div class="row">
+                                <div class="col-3">
+                                    <select multiple="multiple" class="form-control" id="fullname" name="fullname" >
+                                        @foreach($user_fullname as $fullname)
+                                        <option value="{{ $fullname }}">{{ $fullname }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-3">
+                                    <select multiple="multiple" class="form-control" id="phone" name="phone" >
+                                        @foreach($user_phone as $phone)
+                                        <option value="{{ $phone }}">{{ $phone }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-3">
+                                    <select multiple="multiple" class="form-control" id="role_id" name="role_id" >
+                                        @foreach($role as $role)
+                                        <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-3">
+                                    <div class="d-lg-flex justify-content-end">
+                                        <a href="{{ route('user.create') }}" id="btn-them-moi" class="btn btn-primary mt-2 mt-lg-1">
+                                            <i class="bx bxs-plus-square"></i>Thêm mới
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 mb-4">
+                            <div class="row">
+                                <div class="col-3">
+                                    <select id="select-chon-hang-loat" class="form-control">
+                                        <option value=""></option>
+                                        <option value="delete"> Xoá</option>
+                                    </select>
+                                </div>
+                                <div class="col-3">
+                                    <button id="btn-ap-dung" class="btn btn-outline-primary form-control " type="button" disabled>Áp dụng</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="statbox widget box box-shadow">
+                                <div class="table-responsive">
+                                    <table id="user" class="table table-striped table-bordered table-custom-text">
+                                        <thead>
+                                            <tr>
+                                                <th><input name="select_all" value="1" type="checkbox"></th>
+                                                <th>ID</th>
+                                                <th>Mã nhân viên</th>
+                                                <th>Họ tên</th>
+                                                <th>Địa chỉ</th>
+                                                <th>Số điện thoại</th>
+                                                <th>Chức vụ</th>
+                                                <th>Chức năng</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div> 
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-12 mb-4">
-            <div class="row">
-                <div class="col-3">
-                    <select id="select-chon-hang-loat" class="form-control">
-                        <option value=""></option>
-                        <option value="delete"> Xoá</option>
-                    </select>
-                </div>
-                <div class="col-3">
-                    <button id="btn-ap-dung" class="btn btn-outline-primary form-control " type="button" disabled>Áp dụng</button>
-                </div>
-            </div>
-        </div>
-        <div class="col-12 layout-spacing">
-            <div class="statbox widget box box-shadow">
-                <div class="table-responsive">
-                    <table id="user" class="table table-striped table-bordered table-custom-text">
-                        <thead>
-                            <tr>
-                                <th><input name="select_all" value="1" type="checkbox"></th>
-                                <th>ID</th>
-                                <th>Mã nhân viên</th>
-                                <th>Họ tên</th>
-                                <th>Địa chỉ</th>
-                                <th>Số điện thoại</th>
-                                <th>Chức vụ</th>
-                                <th>Chức năng</th>
-                            </tr>
-                        </thead>
-                    </table>
-                </div>
-            </div>
-        </div> 
     </div>
 </div>
 @include('modules.Timesheet.js')

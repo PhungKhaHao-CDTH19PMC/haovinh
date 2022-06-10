@@ -1,5 +1,6 @@
 html { min-height: 100% }
 body {
+    background: #f1f2f3 !important;
     color: #888ea8;
     height: 100%;
     font-size: 0.875rem;
