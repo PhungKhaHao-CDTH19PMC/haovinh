@@ -109,6 +109,9 @@ Route::middleware('auth')->group(function () {
             Route::get('/gia-han/cap-nhat/{id}', [ContractExtensionController::class, 'edit'])->name('renewal_edit');
             Route::post('/gia-han/cap-nhat', [ContractExtensionController::class, 'update'])->name('renewal_update');
             Route::post('/gia-han/xoa', [ContractExtensionController::class, 'destroy'])->name('renewal_destroy');
+            Route::get('/danh-sach-hop-dong-sap-het-han', [ContactController::class, 'contractIsAboutToExpire'])->name('contract_is_about_to_expire');
+            Route::get('/load-ajax-is-about-to-expire', [ContactController::class, 'loadAjaxContractIsAboutToExpire'])->name('load_ajax_contract_is_about_to_expire');
+
         });
     });
 

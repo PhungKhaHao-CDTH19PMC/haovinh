@@ -3,9 +3,9 @@
 <div class="sidebar-wrapper sidebar-theme">
 
     <div class="theme-logo">
-        <a href="index.html">
+        <a href="{{route('dashboard')}}">
             <img src="{{ asset('assets/img/90x90.jpg') }}" class="navbar-logo" alt="logo">
-            <span class="admin-logo">CORK<span></span></span>
+            <span class="admin-logo">HÀO VINH<span></span></span>
         </a>
     </div>
     <div class="sidebarCollapseFixed">
