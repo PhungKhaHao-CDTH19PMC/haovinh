@@ -43,8 +43,8 @@
         </div>
         <div class="col-12 layout-spacing">
             <div class="statbox widget box box-shadow">
-                <div class="table-responsive">
-                    <table id="user" class="table table-striped table-bordered table-custom-text">
+                <div class="widget-content widget-content-area">
+                    <table id="user" class="table style-2  table-hover">
                         <thead>
                             <tr>
                                 <th>STT</th>

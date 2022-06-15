@@ -31,6 +31,13 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    Route::prefix('thong-ke')->group(function () {
+        Route::name('dashboard.')->group(function () {
+            Route::get('/load-ajax-list-user', [DashboardController::class, 'loadAjaxListUser'])->name('load_ajax_list_user');
+            Route::get('/load-ajax-list-annual-leave', [DashboardController::class, 'loadAjaxListAnnualLeave'])->name('load_ajax_list_annual_leave');
+        });
+    });
+    
     Route::get('/dang-xuat', [HomeController::class, 'logout'])->name('logout');
     
     Route::prefix('nguoi-dung')->group(function () {
