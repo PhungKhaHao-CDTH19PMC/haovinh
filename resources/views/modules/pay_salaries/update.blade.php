@@ -261,6 +261,5 @@
        closeOnSelect : true,
         tags: false, 
     });
-
 </script>
 @endsection

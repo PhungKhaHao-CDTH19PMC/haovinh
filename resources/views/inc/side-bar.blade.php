@@ -3,9 +3,9 @@
 <div class="sidebar-wrapper sidebar-theme">
 
     <div class="theme-logo">
-        <a href="index.html">
+        <a href="{{route('dashboard')}}">
             <img src="{{ asset('assets/img/90x90.jpg') }}" class="navbar-logo" alt="logo">
-            <span class="admin-logo">CORK<span></span></span>
+            <span class="admin-logo">HÀO VINH<span></span></span>
         </a>
     </div>
     <div class="sidebarCollapseFixed">
@@ -81,6 +81,16 @@
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-cpu"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg>
                         </div>
                         <span>Chấm công</span>
+                    </div>
+                </a>
+            </li> 
+            <li class="menu menu-single">
+                <a href="{{route('role.list')}}" data-active="false" class="menu-toggle">
+                    <div class="base-menu">
+                        <div class="base-icons">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-cpu"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg>
+                        </div>
+                        <span>Phân Quyền</span>
                     </div>
                 </a>
             </li> 

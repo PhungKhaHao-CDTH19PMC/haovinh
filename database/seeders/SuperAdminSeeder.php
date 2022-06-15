@@ -22,5 +22,8 @@ class SuperAdminSeeder extends Seeder
             'email'     => 'superadmin@example.com',
             'role_id'   => 1
         ]);
+        
+        $user->assignRole('Super Admin');
+
     }
 }

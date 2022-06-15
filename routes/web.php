@@ -85,6 +85,9 @@ Route::middleware('auth')->group(function () {
             Route::get('/', [AnnualLeaveController::class, 'index'])->name('list');
             Route::get('/them-moi', [AnnualLeaveController::class, 'create'])->name('create');
             Route::post('/them-moi', [AnnualLeaveController::class, 'store'])->name('store');
+            Route::get('/danh-sach-nghi-phep-cho-duyet', [AnnualLeaveController::class, 'waitingListForApproval'])->name('waiting_list_for_approval');
+            Route::get('/chap-nhan-don-xin-nghi-phep/{id}', [AnnualLeaveController::class, 'approveLeaveApplication'])->name('approve_leave_application');
+            Route::get('/load-ajax-danh-sach-nghi-phep-cho-duyet', [AnnualLeaveController::class, 'loadAjaxWaitingListForApproval'])->name('load_ajax_waiting_list_for_approval');
             Route::post('/xoa', [AnnualLeaveController::class, 'destroy'])->name('destroy');
             Route::get('/cap-nhat/{id}', [AnnualLeaveController::class, 'edit'])->name('edit');
             Route::post('/cap-nhat', [AnnualLeaveController::class, 'update'])->name('update');
@@ -108,6 +111,9 @@ Route::middleware('auth')->group(function () {
             Route::post('/gia-han/cap-nhat', [ContractExtensionController::class, 'update'])->name('renewal_update');
             Route::post('/gia-han/xoa', [ContractExtensionController::class, 'destroy'])->name('renewal_destroy');
             Route::get('/ma-hoa-don', [ContactController::class, 'getMaHoaDon'])->name('code');
+            Route::get('/danh-sach-hop-dong-sap-het-han', [ContactController::class, 'contractIsAboutToExpire'])->name('contract_is_about_to_expire');
+            Route::get('/load-ajax-is-about-to-expire', [ContactController::class, 'loadAjaxContractIsAboutToExpire'])->name('load_ajax_contract_is_about_to_expire');
+
         });
     });
 

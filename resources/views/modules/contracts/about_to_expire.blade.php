@@ -1,9 +1,8 @@
 @extends('master')
 @section('main-content')
 @csrf
-
-<a href="{{route('annual_leave.waiting_list_for_approval')}}">
-            <span class="admin-logo">DANH SÁCH ĐƠN NGHỈ PHÉP ĐANG ĐỢI DUYỆT<span></span></span>
+<a href="{{route('contracts.contract_is_about_to_expire')}}">
+            <span class="admin-logo">Danh sách hợp đồng sắp hết hạn<span></span></span>
 </a>
 <div class="admin-data-content layout-top-spacing">
     <div class="row project-cards">
@@ -23,7 +22,7 @@
                                 
                                 <div class="col-9">
                                     <div class="d-lg-flex justify-content-end">
-                                        <a href="{{ route('annual_leave.create') }}" id="btn-them-moi" class="btn btn-primary mt-2 mt-lg-1">
+                                        <a href="{{ route('contracts.create') }}" id="btn-them-moi" class="btn btn-primary mt-2 mt-lg-1">
                                             <i class="bx bxs-plus-square"></i>Thêm mới
                                         </a>
                                     </div>
@@ -46,15 +45,17 @@
                         <div class="col-12">
                             <div class="statbox widget box box-shadow">
                                 <div class="widget-content widget-content-area">
-                                    <table id="annual_leave" class="table style-2  table-hover">
+                                    <table id="contract" class="table style-2  table-hover">
                                         <thead>
                                             <tr>
                                                 <th><input name="select_all" value="1" type="checkbox"></th>
                                                 <th>ID</th>
-                                                <th>Họ tên</th>
-                                                <th>Nghĩ từ ngày</th>
-                                                <th>Nghĩ đến ngày</th>
-                                                <th>Số ngày nghĩ</th>
+                                                <th>Mã hợp đồng</th>
+                                                <th>Họ tên nhân viên</th>
+                                                <th>Ngày bắt đầu </th>
+                                                <th>Ngày kết thúc</th>
+                                                <th>Ngày kí hợp đồng </th>
+                                                <th>Số lần gia hạn </th>
                                                 <th>Chức năng</th>
                                             </tr>
                                         </thead>
@@ -65,10 +66,10 @@
                     </div>
                 </div>
             </div>
-        </div> 
+        </div>
     </div>
 </div>
-@include('modules.annual_leave.js')
+@include('modules.contracts.js')
 <script type="text/javascript">
     $("#fullname").multipleSelect({
         placeholder: "Chọn tên nhân viên",
@@ -99,7 +100,7 @@
         },
 
         onClear: function () {
-            var filterFullname = JSON.stringify($("#fullname").val())        
+            var filterFullname = JSON.stringify($("#fullname").val())
             table.columns(2).search(filterFullname).draw();
             $("#btn-ap-dung").attr('disabled', true);
             $("th.select-checkbox").removeClass("selected");
@@ -144,10 +145,10 @@
 </script>
 <script>
     var table;
-    var rows_selected = [];
+        var rows_selected = [];
         resetTable()
         function resetTable () {
-            table = $('#annual_leave').DataTable({
+            table = $('#contract').DataTable({
                 processing  : true,
                 serverSide  : true,
                 autoWidth   : false,
@@ -168,7 +169,7 @@
                     "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' },
                 },
                 ajax: {
-                    url: "{{route('annual_leave.load_ajax_list_annual_leave')}}",
+                    url: "{{route('contracts.load_ajax_contract_is_about_to_expire')}}",
                     type: 'get'
                 },
                 select: {
@@ -176,7 +177,7 @@
                     selector: 'td:first-child'
                 },
                 initComplete: function(settings, json) {
-                $('#annual_leave tbody').on('click', 'input[type="checkbox"]', function(e) {
+                    $('#contract tbody').on('click', 'input[type="checkbox"]', function(e) {
                     var $row = $(this).closest('tr');
 
                     // Get row data
@@ -212,19 +213,19 @@
                     }
                     
                     e.stopPropagation();
-                });
+                    });
 
                 // Handle click on table cells with checkboxes
-                // $('#annual_leave').on('click', 'tbody td, thead th:first-child', function(e) {
+                // $('#contract').on('click', 'tbody td, thead th:first-child', function(e) {
                 //     $(this).parent().find('input[type="checkbox"]').trigger('click');
                 // });
 
                 // Handle click on "Select all" control
                 $('thead input[name="select_all"]', table.table().container()).on('click', function(e) {
                     if (this.checked) {
-                        $('#annual_leave tbody input[type="checkbox"]:not(:checked)').trigger('click');
+                        $('#contract tbody input[type="checkbox"]:not(:checked)').trigger('click');
                     } else {
-                        $('#annual_leave tbody input[type="checkbox"]:checked').trigger('click');
+                        $('#contract tbody input[type="checkbox"]:checked').trigger('click');
                     }
 
                     // Prevent click event from propagating to parent
@@ -238,9 +239,9 @@
                 });
 
 
-                $("#annual_leave").parent().addClass(' table-responsive');
-                $("#annual_leave").parent().parent().addClass(' d-inline');
-            },
+                $("#contract").parent().addClass(' table-responsive');
+                $("#contract").parent().parent().addClass(' d-inline');
+                },
                 drawCallback: function(oSettings) {
                     if (oSettings._iDisplayLength >= oSettings.fnRecordsDisplay()) {
                         $(oSettings.nTableWrapper).find('.dataTables_paginate').hide();
@@ -255,10 +256,12 @@
                 columns: [
                     { data: null, defaultContent: '', bSortable: false },
                     { name: 'id', defaultContent: '',data: 'id',visible: false,bSortable: true},
+                    { name: 'code', defaultContent: '',data: 'code',bSortable: true},
                     { name: 'user_id', defaultContent: '',data: 'user.fullname',bSortable: true},
                     { name: 'start_date', defaultContent: '',data: 'start_date',bSortable: true},
                     { name: 'finish_date', defaultContent: '',data: 'finish_date',bSortable: true},
-                    { name: 'total_day', defaultContent: '',data: 'total_day',bSortable: true},
+                    { name: 'signing_date', defaultContent: '',data: 'signing_date',bSortable: true},
+                    { name: 'renewal_number', defaultContent: '',data: 'count_renewal',bSortable: true},
                 ],
                 columnDefs: [
                     {
@@ -272,12 +275,14 @@
                         }
                     },
                     {
-                        targets: 6,
+                        targets:8,
                         render: function(data,type, columns){
-                            var url = "./nghi-phep/cap-nhat/"+ columns.id;
+                            var urlRenewal = "/hop-dong/gia-han/"+ columns.id;
+                            var urlUpdate = "/hop-dong/cap-nhat/"+ columns.id;
                             return '<div class="d-flex order-actions">'
-                            +'<a href="'+ url +'" class="bs-tooltip" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 p-1 br-6 mb-1"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a>'
+                            +'<a href="'+ urlUpdate +'" class="bs-tooltip" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 p-1 br-6 mb-1"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a>'
                             +'<a href="javascript:void(0);" onclick="deleteRow(this)" data-id="'+columns.id+'" class="bs-tooltip" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash p-1 br-6 mb-1"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a>'
+                            +'<a href="'+ urlRenewal +'" class="bs-tooltip" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 p-1 br-6 mb-1"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a>'
                             +'</div>' 
                         }
                     },
@@ -305,7 +310,7 @@
         }).then((result) => {
             if (result.value) {
                 $.ajax({
-                    url: "{{route('annual_leave.destroy')}}",
+                    url: "{{route('contracts.destroy')}}",
                     type: 'post',
                     data: {id:id},
                 }).done(function(res) {
@@ -362,7 +367,7 @@
                 }).then((result) => {
                     if (result.value) {
                         $.ajax({
-                                    url: "{{route('annual_leave.destroy')}}",
+                                    url: "{{route('contracts.destroy')}}",
                                     type: 'post',
                                     data: formData,
                                     cache:false,

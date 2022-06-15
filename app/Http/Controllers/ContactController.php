@@ -51,6 +51,29 @@ class ContactController extends Controller
                 'data' => 'HD'.$idNext,
             ], 200);
     }
+    
+    public function contractIsAboutToExpire()
+    {
+        $user = User::all();
+        $Contracts = Contract::all();
+        $listConTract = [];
+        foreach($Contracts as $Contract)
+        {
+            if( Carbon::now()->diffInMonths(Carbon::parse($Contract->finish_date)) <= 6)
+            {
+                $listConTract[] = $Contract;
+            }
+        }
+        $salary = Salary::all();
+        $this->breadcrumb['page'] = 'Danh sách';
+        $data = [
+            'contract' => $listConTract,
+            'users'      => $user,
+            'salary'    =>$salary
+        ];
+        // dd($data);
+        return $this->openView("modules.{$this->module}.about_to_expire", $data);
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -288,6 +311,48 @@ class ContactController extends Controller
             "iTotalRecords"        => $totalRecords,
             "iTotalDisplayRecords" => $totalRecordswithFilter,
             "aaData"               => $Contract,
+            "filter"               => $filter,
+        ];
+        echo json_encode($response);
+        exit;
+    }
+    public function loadAjaxContractIsAboutToExpire(Request $request)
+    {
+        $draw            = $request->get('draw');
+        $start           = $request->get("start");
+        $rowperpage      = $request->get("length"); // Rows display per page
+        $columnIndex_arr = $request->get('order');
+        $columnName_arr  = $request->get('columns');
+        $order_arr       = $request->get('order');
+        $search_arr      = $request->get('search');
+        $columnIndex     = $columnIndex_arr[0]['column']; // Column index
+        $columnName      = $columnName_arr[$columnIndex]['name']; // Column name
+        $columnSortOrder = $order_arr[0]['dir']; // asc or desc
+        $searchValue     = trim($search_arr['value']); // Search value
+        $filter['name'] =  $searchValue;
+        $filter = $this->customFilterAjax($filter, $columnName_arr);
+        // Total records
+        $totalRecords  = Contract::count();
+        $totalRecordswithFilter = Contract::queryData($filter)->distinct()->count();
+        $Contracts = Contract::select(['Contracts.*'])
+        ->with(['user'])
+        ->with(['salary'])
+        ->QueryData($filter)
+        ->orderBy($columnName, $columnSortOrder)->distinct()->skip($start)->take($rowperpage)->get();
+
+        $listConTract = [];
+        foreach($Contracts as $Contract)
+        {
+            if( Carbon::now()->diffInMonths(Carbon::parse($Contract->finish_date)) <= 6)
+            {
+                $listConTract[] = $Contract;
+            }
+        }
+        $response = [
+            "draw"                 => intval($draw),
+            "iTotalRecords"        => $totalRecords,
+            "iTotalDisplayRecords" => $totalRecordswithFilter,
+            "aaData"               => $listConTract,
             "filter"               => $filter,
         ];
         echo json_encode($response);

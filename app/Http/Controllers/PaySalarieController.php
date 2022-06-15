@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use App\Models\PaySalary;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Contract;
+use App\Models\Timesheet;
 
 class PaySalarieController extends Controller
 {
@@ -28,8 +29,61 @@ class PaySalarieController extends Controller
      */
     public function index()
     {
+        // $monthNow = Carbon::now()->month;
+        // $yearNow = Carbon::now()->year;
         $user = User::all();
-        // $monthNow =substr(Carbon::now()->format('d-m-Y H:i:s'),4,7);
+        // $checkPaySalary = PaySalary::max('month');
+        // $checkmonth = Carbon::parse($checkPaySalary)->month;
+        // $checkyear = Carbon::parse($checkPaySalary)->year;
+      
+        // if($yearNow > $checkyear || $yearNow == $checkyear && $monthNow > $checkmonth)
+        // {
+            foreach($user as $us)
+            {
+                $Contract = Contract::where('user_id',$us->id)->first();
+                // dd( $us->id);
+                $checkSalaryPayable = Salary::find($Contract->salary_id)->salary_payable;
+                $monthNow = Carbon::now()->format('m-Y');
+                $checkTimeSheets = Timesheet::where('user_id',$us->id)->where('in_hour','LIKE',"%$monthNow%")->get();
+                $working_day = 0;
+                foreach($checkTimeSheets as $checkTimeSheet)
+                {
+                    if(Carbon::parse($checkTimeSheet->in_hour)->diffInHours(Carbon::parse($checkTimeSheet->out_hour)) > 4)
+                    {
+                        $working_day += 1;
+                    }
+                    else
+                    {
+                        $working_day += 0.5;
+                    }
+                }
+                        $checkPaySalary = PaySalary::where('month',"LIKE", "%$monthNow%")
+                                ->where('user_id',$us->id,)->first();
+                            if(empty($checkPaySalary))
+                            {
+                                $newPaySalary = PaySalary::create([
+                                    'salary_id'     =>  $Contract->salary_id,
+                                    'user_id'       =>  $us->id,
+                                    'working_day'   =>  $working_day,
+                                    'salary'        =>  $working_day*(float)$checkSalaryPayable,
+                                    'allowance'     =>  0,
+                                    'total'         =>   $working_day*(float)$checkSalaryPayable,
+                                    'advance'       =>  0,
+                                    'actual_salary' =>   $working_day*(float)$checkSalaryPayable,
+                                    'month'         =>  Carbon::now()->format('d-m-Y H:i:s'),
+                                    'status'        =>  0,
+                                ]);
+                            }else{
+                                // dd($working_day*(float)$checkSalaryPayable+ $checkPaySalary->allowance- $checkPaySalary->advance);
+                                $checkPaySalary->working_day = $working_day;
+                                $checkPaySalary-> salary = $working_day*(float)$checkSalaryPayable;
+                                $checkPaySalary-> total = $working_day*(float)$checkSalaryPayable + $checkPaySalary->allowance;
+                                $checkPaySalary-> actual_salary = $working_day*(float)$checkSalaryPayable + $checkPaySalary->allowance - $checkPaySalary->advance;
+                                $checkPaySalary->month  = Carbon::now()->format('d-m-Y H:i:s');
+                                $checkPaySalary->save();
+                            }
+            }
+        // }
         $paySalary = PaySalary::all();
         $datePaySalary = PaySalary::where('id','>',0)->selectRaw("substring(month,4,7)")->distinct()->get();
         $salary = Salary::all();
@@ -43,6 +97,7 @@ class PaySalarieController extends Controller
         ];
         // dd($paySalary ); 
         return $this->openView("modules.{$this->module}.list", $data);
+       
     }
 
     /**
@@ -101,7 +156,7 @@ class PaySalarieController extends Controller
                 'message' => $validator->messages()->first(),
             ], 200);
         }
-        $monthNow =substr(Carbon::now()->format('d-m-Y H:i:s'),4,7);
+        $monthNow = substr(Carbon::now()->format('d-m-Y H:i:s'),4,7);
         $checkPaySalary = PaySalary::where('user_id',$request->user_id)->where('month','LIKE',"%$monthNow%")->count();
         if($checkPaySalary>0)
         {
