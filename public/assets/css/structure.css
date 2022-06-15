@@ -1397,3 +1397,7 @@ code { color: #e7515a; }
         padding-top: 8px;
     }
 }
+.required {
+    color: #e7515a;
+    font-weight: 900;
+}

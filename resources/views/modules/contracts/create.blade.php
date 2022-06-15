@@ -11,7 +11,7 @@
                             <div class="row">
                                 <div class="col-md-6 col-sm-12" style="margin-bottom:2%">
                                     <label class="form-label" for="ten">Mã hợp đồng<span class="required"> *</span></label>
-                                    <input type="text" class="form-control" id="code" name="code" value="{{$code}}" readonly>
+                                    <input type="text" class="form-control" id="code" name="code"readonly>
                                 </div>
                                 <div class="col-md-6 col-sm-12" style="margin-bottom:2%">
                                     <label class="form-label" for="ten">Tên nhân viên<span class="required"> *</span></label>
@@ -93,6 +93,29 @@
     </div>
 </div>
 @include('modules.contracts.js')
+<script type="text/javascript">
+    $(document).ready(function() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $("input[name='_token']").val()
+            }
+        });
+
+        $.ajax({
+                url: "{{route('contracts.code')}}",
+                type: 'get',
+                cache:false,
+                contentType: false,
+                processData: false,
+                dataType: 'json',
+        }).done(function(res) {
+            if (res.status == 'success') {
+                $("#code").val(res.data)
+            }
+        });
+        
+    });
+</script>
 <script>
     $('#btn-submit-form').click(function() {
         if($('#frm-them-moi').parsley().validate()) {

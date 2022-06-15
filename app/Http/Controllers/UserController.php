@@ -44,6 +44,14 @@ class UserController extends Controller
         return $this->openView("modules.{$this->module}.list", $data);
     }
 
+    public function getMaNhanVien()
+    {
+        $idNext = User::withTrashed()->max('id') + 1;
+        return response()->json([
+                'status' => 'success',
+                'data' => 'NV'.$idNext,
+            ], 200);
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -51,14 +59,12 @@ class UserController extends Controller
      */
     public function create()
     {
-        $code = 'NV'.User::withTrashed()->max('id') + 1;
         $role = Role::all();
         $department = Department::all();
         $this->breadcrumb['page'] = 'Thêm mới';
         $data = [
             'roles'         => $role,
             'departments'   => $department,
-            'code'   => $code,
         ];
         $this->title = 'Thêm mới';
         return $this->openView("modules.{$this->module}.create", $data);

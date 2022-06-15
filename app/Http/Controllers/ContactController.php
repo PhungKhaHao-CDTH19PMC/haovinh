@@ -43,6 +43,15 @@ class ContactController extends Controller
         return $this->openView("modules.{$this->module}.list", $data);
     }
 
+    public function getMaHoaDon()
+    {
+        $idNext = Contract::withTrashed()->max('id') + 1;
+        return response()->json([
+                'status' => 'success',
+                'data' => 'HD'.$idNext,
+            ], 200);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

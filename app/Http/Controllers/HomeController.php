@@ -12,21 +12,6 @@ use App\Models\Distributor;
 
 class HomeController extends Controller
 {
-    public function __construct()
-    {
-        $this->breadcrumb = [
-            'object'    => 'Trang chủ',
-            'page'      => ''
-        ];
-        $this->module = 'dashboard';
-        $this->title = 'Trang chủ';
-    }
-
-    public function index()
-    {
-        return $this->openView('modules.dashboard.dashboard');
-    }
-
     public function login()
     {
         return view('login');

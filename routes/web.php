@@ -12,7 +12,7 @@ use App\Http\Controllers\SalaryController;
 use App\Http\Controllers\ContractExtensionController;
 use App\Http\Controllers\PaySalarieController;
 use App\Http\Controllers\TimesheetController;
-
+use App\Http\Controllers\DashboardController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -30,7 +30,7 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/', [HomeController::class, 'index'])->name('dashboard');
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/dang-xuat', [HomeController::class, 'logout'])->name('logout');
     
     Route::prefix('nguoi-dung')->group(function () {
@@ -43,6 +43,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/', [UserController::class, 'index'])->name('list');
             Route::get('/load-ajax-list-user', [UserController::class, 'loadAjaxListUser'])->name('load_ajax_list_user');
             Route::get('/load-filter-user', [UserController::class, 'loadFilterUser'])->name('load_filter_user');
+            Route::get('/ma-nhan-vien', [UserController::class, 'getMaNhanVien'])->name('code');
         });
     });
 
@@ -106,6 +107,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/gia-han/cap-nhat/{id}', [ContractExtensionController::class, 'edit'])->name('renewal_edit');
             Route::post('/gia-han/cap-nhat', [ContractExtensionController::class, 'update'])->name('renewal_update');
             Route::post('/gia-han/xoa', [ContractExtensionController::class, 'destroy'])->name('renewal_destroy');
+            Route::get('/ma-hoa-don', [ContactController::class, 'getMaHoaDon'])->name('code');
         });
     });
 
