@@ -16,6 +16,7 @@
                                     value="{{$annual_leave->start_date}}"
                                     data-parsley-required-message="Vui lòng nhập ngày bắt đầu"
                                     required>
+                                    <div id="error-parley-select-nbd" class="error-date"></div>
                                 </div>
                                 <div class="col-md-6 col-sm-12" style="margin-bottom:2%">
                                     <label class="form-label" for="ten">Ngày kết thúc<span class="required"> *</span></label>
@@ -177,13 +178,29 @@
 </script>
 <script>
   $("#start_date").blur(function(){
+    $("#finish_date").val("");
+    $("#error-parley-select-fd").html("");
     var ngay_bat_dau  = $("#start_date").val();
-    var ngay_ket_thuc = $("#finish_date").val("");
+    var ngay_ket_thuc = $("#finish_date").val();
     var d = new Date(ngay_bat_dau);
-    if(isNaN(d))
+    var today = new Date().toISOString().split("T")[0];
+    if(!isNaN(d))
     {
-        $("#start_date").val("");
-        $("#total_day").val('');
+        if(ngay_bat_dau>today)
+        {
+            $("#error-parley-select-nbd").html("Ngày bắt đầu không được lớn hơn ngày hiện tại");
+            $( "#btn-submit-form" ).prop( "disabled", true );
+        }
+        else
+        {
+            $("#error-parley-select-nbd").html("");
+            $( "#btn-submit-form" ).prop( "disabled", false );
+        }
+    }
+    else
+    {
+        $("#start_date").val("")
+        $("#error-parley-select-nbd").html("");
     }
   });
 </script>
