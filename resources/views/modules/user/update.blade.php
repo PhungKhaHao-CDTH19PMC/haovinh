@@ -43,6 +43,7 @@
                                     value="{{$user->birthday}}"
                                     data-parsley-required-message="Vui lòng nhập ngày sinh"
                                     required>
+                                    <div id="error-parley-select-ns" class="error-date"></div>
                                 </div>
                             </div>
                             <div class="row">
@@ -211,5 +212,30 @@
                 });
             }
         });
+</script>
+<script>
+  $("#birthday").blur(function(){
+    var birthday = $("#birthday").val();
+    var d = new Date(birthday);
+    var today = new Date().toISOString().split("T")[0];
+    if(!isNaN(d))
+    {
+        if(birthday>today)
+        {
+            document.getElementById("error-parley-select-ns").innerHTML="Ngày sinh không được lớn hơn ngày hiện tại"
+            document.getElementById("btn-submit-form").disabled = true;
+        }
+        else
+        {
+            document.getElementById("error-parley-select-ns").innerHTML=""
+            document.getElementById("btn-submit-form").disabled = false;
+        }
+    }
+    else
+    {
+        document.getElementById("birthday").value="";
+        document.getElementById("error-parley-select-ns").innerHTML=""
+    }
+  });
 </script>
 @endsection

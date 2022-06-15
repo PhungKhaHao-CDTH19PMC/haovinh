@@ -1401,3 +1401,11 @@ code { color: #e7515a; }
     color: #e7515a;
     font-weight: 900;
 }
+.error-date {
+    color: #e7515a;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin: 0.5rem 0 0 0 !important;
+    list-style: none;
+}

@@ -20,6 +20,7 @@
                                     data-parsley-required-message="Vui lòng nhập ngày kí hợp đồng"
                                     required>
                                 </div>
+                                
                             </div>
                             <div class="row">
                                 <div class="col-md-6 col-sm-12" style="margin-bottom:2%">
@@ -27,6 +28,7 @@
                                     <input type="date" class="form-control" id="renewal_date_finish" name="renewal_date_finish"
                                     data-parsley-required-message="Vui lòng nhập ngày bắt đầu"
                                     required>
+                                    <div id="error-parley-select-ghd" class="error-date"></div>
                                 </div>
                                 <div class="col-md-6 col-sm-12" style="margin-bottom:2%">
                                     <label class="form-label" for="ten">Hệ số lương<span class="required"> *</span></label>
@@ -106,5 +108,44 @@
                 });
             }
         });
+</script>
+<script>
+  $("#renewal_date_finish").blur(function(){
+    var gia_han_tu = $("#renewal_date_start").val();
+    var gia_han_den = $("#renewal_date_finish").val();
+    var d = new Date(gia_han_den);
+    if(!isNaN(d))
+    {
+        if(gia_han_tu!='')
+        {
+            if(gia_han_den>gia_han_tu)
+            {
+                document.getElementById("error-parley-select-ghd").innerHTML="Ngày gia hạn đến không được lớn hơn ngày ngày gia hạn từ"
+                document.getElementById("btn-submit-form").disabled = true;
+            }
+            else
+            {
+                document.getElementById("error-parley-select-ghd").innerHTML=""
+                document.getElementById("btn-submit-form").disabled = false;
+            }
+        }
+    }
+    else
+    {
+        document.getElementById("renewal_date_finish").value="";
+        document.getElementById("error-parley-select-ghd").innerHTML=""
+    }
+  });
+</script>
+<script>
+  $("#renewal_date_start").blur(function(){
+    $("#renewal_date_finish").val('');
+    var ngay_bat_dau = $("#renewal_date_start").val();
+    var d = new Date(ngay_bat_dau);
+    if(isNaN(d))
+    {
+        document.getElementById("renewal_date_start").value="";
+    }
+  });
 </script>
 @endsection

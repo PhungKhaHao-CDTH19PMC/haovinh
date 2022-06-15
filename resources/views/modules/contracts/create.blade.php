@@ -34,12 +34,14 @@
                                     <input type="date" class="form-control" id="signing_date" name="signing_date"
                                     data-parsley-required-message="Vui lòng nhập ngày kí hợp đồng"
                                     required>
+                                    <div id="error-parley-select-nkhd" class="error-date"></div>
                                 </div>
                                 <div class="col-md-6 col-sm-12" style="margin-bottom:2%">
                                     <label class="form-label" for="ten">Ngày bắt đầu<span class="required"> *</span></label>
                                     <input type="date" class="form-control" id="start_date" name="start_date"
                                     data-parsley-required-message="Vui lòng nhập ngày bắt đầu"
                                     required>
+                                    <div id="error-parley-select-nbd" class="error-date"></div>
                                 </div>
                             </div>
                             <div class="row">
@@ -48,6 +50,7 @@
                                     <input type="date" class="form-control" id="finish_date" name="finish_date"
                                     data-parsley-required-message="Vui lòng nhập ngày kết thúc"
                                     required>
+                                    <div id="error-parley-select-nkt" class="error-date"></div>
                                 </div>
                                 <div class="col-md-6 col-sm-12" style="margin-bottom:1%">
                                     <label class="form-label" for="ten">Nội dung<span class="required"> *</span></label>
@@ -183,52 +186,68 @@
         tags: false, 
     });
 </script>
-
-<!-- <script>
-    $("#finish_date").blur(function(){
-        var ngay_bat_dau  = $("#start_date").val();
-        var ngay_ket_thuc = $("#finish_date").val();
-        var date1 = new Date(ngay_bat_dau);
-        var date2 = new Date(ngay_ket_thuc);
-        var difference = date2.getTime() - date1.getTime();
-        var days = Math.ceil(difference / (1000 * 3600 * 24)) + 1;
-        
-        var d = new Date(ngay_ket_thuc);
-        if(!isNaN(d))
+<script>
+  $("#signing_date").blur(function(){
+    var ngay_ki_hop_dong = $("#signing_date").val();
+    var d = new Date(ngay_ki_hop_dong);
+    var today = new Date().toISOString().split("T")[0];
+    if(!isNaN(d))
+    {
+        if(ngay_ki_hop_dong>today)
         {
-            if(ngay_bat_dau !='')
-            {
-                if(ngay_bat_dau>ngay_ket_thuc)
-                {
-                    $("#error-parley-select-fd").html("Ngày nghĩ đến không được nhỏ hơn ngày nghĩ từ");
-                    $( "#btn-submit-form" ).prop( "disabled", true );
-                    $("#total_day").val('');
-                }
-                else
-                {
-                    $("#error-parley-select-fd").html("");
-                    $( "#btn-submit-form" ).prop( "disabled", false );
-                    $("#total_day").val(days);
-                }
-            }
+            document.getElementById("error-parley-select-nkhd").innerHTML="Ngày kí hợp đồng không được lớn hơn ngày hiện tại"
+            document.getElementById("btn-submit-form").disabled = true;
         }
         else
         {
-            document.getElementById("finish_date").value="";
-            document.getElementById("error-parley-select-fd").innerHTML=""
+            document.getElementById("error-parley-select-nkhd").innerHTML=""
+            document.getElementById("btn-submit-form").disabled = false;
         }
-    });
+    }
+    else
+    {
+        document.getElementById("signing_date").value="";
+        document.getElementById("error-parley-select-nkhd").innerHTML=""
+    }
+  });
+</script>
+<script>
+  $("#finish_date").blur(function(){
+    var ngay_ket_thuc = $("#finish_date").val();
+    var ngay_bat_dau = $("#start_date").val();
+    var d = new Date(ngay_ket_thuc);
+    if(!isNaN(d))
+    {
+        if(ngay_bat_dau!='')
+        {
+            if(ngay_ket_thuc>ngay_bat_dau)
+            {
+                document.getElementById("error-parley-select-nkt").innerHTML="Ngày kết thúc không được lớn hơn ngày bắt đầu"
+                document.getElementById("btn-submit-form").disabled = true;
+            }
+            else
+            {
+                document.getElementById("error-parley-select-nkt").innerHTML=""
+                document.getElementById("btn-submit-form").disabled = false;
+            }
+        }
+    }
+    else
+    {
+        document.getElementById("finish_date").value="";
+        document.getElementById("error-parley-select-nkt").innerHTML=""
+    }
+  });
 </script>
 <script>
   $("#start_date").blur(function(){
-    var ngay_bat_dau  = $("#start_date").val();
-    var ngay_ket_thuc = $("#finish_date").val("");
+    $("#finish_date").val('');
+    var ngay_bat_dau = $("#start_date").val();
     var d = new Date(ngay_bat_dau);
     if(isNaN(d))
     {
-        $("#start_date").val("");
-        $("#total_day").val('');
+        document.getElementById("start_date").value="";
     }
   });
-</script> -->
+</script>
 @endsection
