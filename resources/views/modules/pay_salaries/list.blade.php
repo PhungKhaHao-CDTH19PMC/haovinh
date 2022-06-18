@@ -23,13 +23,13 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="col-6">
+                                <!-- <div class="col-6">
                                     <div class="d-lg-flex justify-content-end">
                                         <a href="{{ route('pay_salaries.create') }}" id="btn-them-moi" class="btn btn-primary mt-2 mt-lg-1">
                                             <i class="bx bxs-plus-square"></i>Thêm mới
                                         </a>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                         <div class="col-12 mb-4">
