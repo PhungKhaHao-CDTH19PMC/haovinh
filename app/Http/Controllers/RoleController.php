@@ -38,6 +38,7 @@ class RoleController extends Controller
             // 'user_fullname' => $user_fullnames
 
         ];
+        // dd($role);
         return view("modules.{$this->module}.list", $data);
     }
 
@@ -71,7 +72,7 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->name);
+        // dd($request->all());
         $validator = Validator::make(
             $request->all(),
             [
